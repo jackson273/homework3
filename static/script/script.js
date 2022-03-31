@@ -13,6 +13,19 @@ window.onscroll = function() {
 // collapse navbar after click on small devices
 const navLinks = document.querySelectorAll('.nav-item')
 const menuToggle = document.getElementById('navbarSupportedContent')
+const btn = document.querySelector('.navbar-toggler')
+
+function clickHandler() {
+    header.classList.toggle('navbarLight');
+}
+function activateButton(button) {
+    button.addEventListener('click', clickHandler);
+}
+function disableButton(button) { 
+    button.removeEventListener('click', clickHandler);
+}
+
+activateButton(btn);
 
 navLinks.forEach((l) => {
     l.addEventListener('click', () => { new bootstrap.Collapse(menuToggle).toggle() })

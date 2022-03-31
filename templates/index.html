@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Portfolio Website-Brad</title>
+    <title>Jackson's Blog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- bootstrap CDN -->
@@ -14,6 +14,8 @@
     <!-- font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <script src="https://kit.fontawesome.com/31149d48b0.js" crossorigin="anonymous"></script>
+     <!-- Favicons -->
+  <link href={{ url_for("static", filename="img/favicon.png") }} rel="icon">
 </head>
 
 <body>
@@ -22,9 +24,9 @@
         <div class="container">
             <a class="navbar-brand" href="#">
                 {% if user %}
-                    {{ user.username }}
+                   User: {{ user.username }}
                 {% else %}
-                    Anonymous
+                    Login to create new Post
                 {% endif %}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -56,7 +58,7 @@
     <section class="light" id="portfolio">
         <div class="container py-2">
             
-            <div class="h1 text-center text-dark" id="pageHeaderTitle">posts</div>
+            <div class="h1 text-center text-dark" id="pageHeaderTitle">Jackson's Blog</div>
             <!-- Button trigger modal -->
             {% if user %}
             <div class="h1 text-center text-dark d-flex flex-row-reverse" id="pageHeaderTitle">
@@ -86,7 +88,7 @@
                 {% if loop.index % 2 == 1 %}
                     <article class="postcard light blue">
                         <a class="postcard__img_link" href="#">
-                            <img class="postcard__img" src="\{{ post['imageURL'] }}" alt="Image Title" />
+                            <img class="postcard__img"  src="\{{ post['imageURL'] }}" alt="Image Title" />
                         </a>
                         <div class="postcard__text t-dark">
                             <h1 class="postcard__title blue"><a href="#">{{ post['title'] }}</a></h1>
@@ -95,9 +97,8 @@
                                     <i class="fas fa-calendar-alt mr-2"></i>{{ post['timestamp'] }}
                                 </time>
                             </div>
-                            <div class="postcard__bar"></div>
                             <div class="postcard__preview-txt">{{ post['text'] }}</div>
-                            <div class="text-end">~ {{ post['author'] }} ~</div>
+                            <div class="text-end">Created by {{ post['author'] }}</div>
                         </div>
                     </article>
                 {% else %}
@@ -112,9 +113,8 @@
                                     <i class="fas fa-calendar-alt mr-2"></i>{{ post['timestamp'] }}
                                 </time>
                             </div>
-                            <div class="postcard__bar"></div>
                             <div class="postcard__preview-txt">{{ post['text'] }}</div>
-                            <div class="text-end">~ {{ post['author'] }} ~</div>
+                            <div class="text-end">Created by {{ post['author'] }}</div>
                         </div>
                     </article>
                 {% endif %}
@@ -131,21 +131,11 @@
                 <div class="single-footer-widget section_padding_0_130">
                     <!-- Footer Logo-->
                     <div class="footer-logo mb-3"></div>
-                    <p>This is completely creative, lightweight, clean profile .</p>
                     <!-- Copywrite Text-->
                     <div class="copywrite-text mb-5">
-                        <p class="mb-0">Made with <i class="lni-heart mr-1"></i>by<a class="ml-1" href=#> Do Bao Hoang
-                                <3 </a>
+                        <p class="mb-0">Made<i class="lni-heart mr-1"></i> by<a class="ml-1" href=#> Jackson </a>
                         </p>
                     </div>
-                    <!-- Footer Social Area-->
-                    <div class="footer_social_area d-flex justify-content-center"><a href="#" data-toggle="tooltip"
-                            data-placement="top" title="" data-original-title="Facebook"><i
-                                class="fa fa-facebook"></i></a><a href="#" data-toggle="tooltip" data-placement="top"
-                            title="" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a><a href="#"
-                            data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype"><i
-                                class="fa fa-skype"></i></a><a href="#" data-toggle="tooltip" data-placement="top"
-                            title="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></div>
                 </div>
             </div>
         </div>
@@ -160,7 +150,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Create new post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="form-control form-floating" action="{{ url_for('create_post') }}" method="post" enctype=multipart/form-data>
+                <form class="form-control form-floating " style="height: 420px" action="{{ url_for('create_post') }}" method="post" enctype=multipart/form-data>
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="inputGroupFile01">Image</label>
@@ -172,7 +162,7 @@
                         </div>
                         <div class="form-floating">
                             <textarea class="form-control" placeholder="Input your text here" name="text" id="floatingTextarea2" style="height: 100px"></textarea>
-                            <label for="floatingTextarea2">Text</label>
+                            <label for="floatingTextarea2">Insert text...</label>
                         </div>
                     </div>
                 

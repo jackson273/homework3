@@ -9,7 +9,7 @@ USER_DB_DIR = config.USER_DB_DIR
 DATABASE_URI = config.DATABASE_URI
 
 client = MongoClient(DATABASE_URI)
-db = client['Practice_1']
+db = client['Homework3']
 users = db['Users']
 
 def gen_session_token(length=24):
