@@ -85,7 +85,7 @@ class User:
                     'username': self.username,
                     'password': self.password,
                     'token': self.token,
-                    'imageURL': self.imageURL
+                    'imageURL': self.imageURL,
                     'posts': self.posts
                 }
             },
