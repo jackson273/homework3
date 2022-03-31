@@ -1,0 +1,12 @@
+.wrap-login100 {
+    text-align:center;
+    background-color: bisque;
+    position:static;
+}
+
+.login100-form-title {
+    font-size: 40px;
+    font-family: 'Gill Sans';
+    color: blue;
+}
+
