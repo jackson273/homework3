@@ -2,7 +2,7 @@ import json
 import time, os
 import config
 
-from flask import Flask, render_template, request, send_from_directory, redirect, flash, make_response
+from flask import Flask, render_template, request, send_from_directory, redirect, flash, make_response, jsonify
 from flask.helpers import url_for
 from werkzeug.utils import secure_filename
 
@@ -83,8 +83,11 @@ def login():
 def logout():
     username = request.cookies.get('username', '')
     User.filter(username=username)[0].terminate_session()
+    response = make_response(redirect(url_for('login')))
+    response.set_cookie(key='username',value='')
+    response.set_cookie(key='token',value='')
     flash('Logout successfully!', 'message')
-    return redirect(url_for('login'))
+    return response
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
@@ -104,54 +107,6 @@ def register():
             return redirect(url_for('login'))
     
     return render_template('register.html')
-
-@app.route('/edit-pwd/', methods=['GET', 'POST'])
-@login_required
-def edit_password():
-    if request.method == 'POST':
-        username = request.cookies.get('username')
-        password_old = request.form.get('password_old', '')
-        password_new = request.form.get('password_new', '')
-        password_confirm = request.form.get('password_confirm', '')
-        user = User.filter(username=username)[0]
-        if not user.authenticate(password_old):
-            flash('Old password is incorrect', 'error')
-        elif password_new != password_confirm:
-            flash('New password is incorrect!', 'error')
-        else:
-            user.edit_pwd(password_new)
-            flash('Change password successfully', 'message')
-            return redirect(url_for('login'))
-    
-    return render_template('edit_password.html')
-
-@app.route('/edit-profile-pic/', methods=['GET', 'POST'])
-@login_required
-def upload_file():
-    user = User.filter(username=request.cookies.get('username', ''))[0]
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'image' in request.files: 
-            image = request.files['image']
-            # If the user does not select a file, the browser submits an empty file without a filename.
-            if image.filename:
-                if image and allowed_file(image.filename):
-                    filename = secure_filename(image.filename)
-                    new_imageURL = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                    image.save(new_imageURL)
-                    user.imageURL =  f"{IMAGES_ROOT}{filename}" 
-                    user.save()
-                    flash('Changed image successfully!!!')
-                    return redirect(url_for('image_file', filename=filename))
-                    #return redirect(url_for('upload_file'))
-                else:
-                    flash('Not supported image', 'error')
-            else:
-                flash('No selected image', 'error')
-        else:
-            flash('No image part', 'error')
-
-    return render_template('edit_profile_pic.html', user_imageURL=user.imageURL)
 
 @app.route('/upload/<path:filename>')
 def image_file(filename):
